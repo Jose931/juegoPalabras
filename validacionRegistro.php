@@ -1,22 +1,40 @@
 <?php
-
-
-
+    include("config.php");
+    
+    
     function validacionUser($variable){
-    $permitidos = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-_";
-    for ($i=0; $i<strlen($variable); $i++){
-        if (strpos($permitidos, substr($variable,$i,1))===false){
-            return false;
+        try {
+            $conexion = new mysqli('localhost', 'root', '','juego_palabras');
+        } catch (Exception $e) {
+            echo 'Error con la base de datos: ' . $e->getMessage();
         }
-    }
-    return true;
+        $sentencia = $conexion->query("SELECT usuario FROM usuarios");
+        $usuarios=[];
+       
+       foreach($sentencia as $fila){
+           foreach($fila as $dato){
+               $usuarios[] = $dato;
+           }
+   
+       }
+
+       for($i = 0; $i < count($usuarios); $i++){
+            if($variable == $usuarios[$i]){
+                echo "Ya existe este usuario. Por favor elige uno nuevo" . "<br>";
+                return false;
+            }
+       }
+       return true;
     }
 
     function validacionContraseñas($variable1, $variable2){
         if(strcmp($variable1, $variable2) == 0){
             return true;
+        }else{
+            echo "Las contraseñas deben de ser iguales" . "<br>";
+            return false;
         }
-        return false;
+        
     }
     function validacionNombre($variable){
         $permitidos = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789´";

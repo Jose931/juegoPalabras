@@ -1,18 +1,29 @@
 <?php
     include("validacionRegistro.php");
+    include("config.php");
 
     
     if($_SERVER["REQUEST_METHOD"] = "POST"){
        
         if(!empty($_POST['registrar'])){
-            $user = validacionUser($_POST['usuario']);
-            $contraseña = validacionContraseñas($_POST['password'], $_POST['password2']);
-            $nombre = validacionNombre($_POST['nombre']);
-            $aspellido = validacionApellido($_POST['apellido']);
+            $usuario = $_POST['usuario'];
+            $contraseña = $_POST['contraseña'];
+            $contraseña2 = $_POST['contraseña2'];
+            $nombre = $_POST['nombre'];
+            $apellido = $_POST['apellido'];
 
-            if($user && $contraseña && $nombre && $apellido){
+            $comUser = validacionUser($usuario);
+            $comContraseña = validacionContraseñas($contraseña, $contraseña2);
+            $comNombre = validacionNombre($nombre);
+            $comApellido = validacionApellido($apellido);
+
+            if(!$comUser && !$comContraseña && !$comNombre && !$comApellido){
                 echo "Hay campos que no has rellenado bien";
             }else{
+                $ins = "INSERT into usuarios values('$usuario', '$contraseña', '$nombre', '$apellido', '')";
+                $insertar = $conexion->query($ins);
+                
+
                 header("Location:login.php");
             }
         }
@@ -40,16 +51,16 @@
                 <input type='text' id="usuario" name="usuario" placeholder="Usuario"value ="<?php if(!empty($_POST['usuario'])) {echo $_POST['usuario'];}?>" required/><br>
             </div>
             <div class="form-element">
-                <input type='password' id="password" name="password" placeholder="Contraseña" required/><br>
+                <input type='password' id="contraseña" name="contraseña" placeholder="Contraseña" required/><br>
             </div>
             <div class="form-element">
-                <input type='password' id="password2" name="password2" placeholder="Repita contraseña" required/><br>
+                <input type='password' id="contraseña2" name="contraseña2" placeholder="Repita contraseña" required/><br>
             </div>
             <div class="form-element">
                 <input type='text' id="nombre" name="nombre" placeholder="Nombre" value="<?php if(!empty($_POST['nombre'])) {echo $_POST['nombre'];}?>" required/><br>
             </div>
             <div class="form-element">
-                <input type='text' id="apellidos" name="apellidos" placeholder="Apellido" value="<?php if(!empty($_POST['apellido'])) {echo $_POST['apellido'];}?>" required/><br>
+                <input type='text' id="apellido" name="apellido" placeholder="Primer apellido" value="<?php if(!empty($_POST['apellido'])) {echo $_POST['apellido'];}?>" required/><br>
             </div>
             <br>
 
