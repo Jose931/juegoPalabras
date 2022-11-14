@@ -1,28 +1,36 @@
 <?php
     include("validacionRegistro.php");
-    include("config.php");
+    // include("config.php");
 
     
     if($_SERVER["REQUEST_METHOD"] = "POST"){
        
         if(!empty($_POST['registrar'])){
-            $usuario = $_POST['usuario'];
-            $contraseña = $_POST['contraseña'];
-            $contraseña2 = $_POST['contraseña2'];
-            $nombre = $_POST['nombre'];
-            $apellido = $_POST['apellido'];
+            // $usuario = $_POST['usuario'];
+            // $contraseña = $_POST['contraseña'];
+            // $contraseña2 = $_POST['contraseña2'];
+            // $nombre = $_POST['nombre'];
+            // $apellido = $_POST['apellido'];
+
+            $usuario ='jose';
+            $contraseña = '1234';
+            $contraseña2 = '1234';
+            $nombre = 'jose+';
+            $apellido = 'aresti';
+
+
 
             $comUser = validacionUser($usuario);
             $comContraseña = validacionContraseñas($contraseña, $contraseña2);
             $comNombre = validacionNombre($nombre);
             $comApellido = validacionApellido($apellido);
 
-            if(!$comUser && !$comContraseña && !$comNombre && !$comApellido){
+            if($comUser || $comContraseña || $comNombre || $comApellido){
                 echo "Hay campos que no has rellenado bien";
             }else{
-                $ins = "INSERT into usuarios values('$usuario', '$contraseña', '$nombre', '$apellido', '')";
-                $insertar = $conexion->query($ins);
-                
+                // $ins = "INSERT into usuarios values('$usuario', '$contraseña', '$nombre', '$apellido', '')";
+                // $insertar = $conexion->query($ins);
+                echo "Bien hecho";
 
                 header("Location:login.php");
             }
