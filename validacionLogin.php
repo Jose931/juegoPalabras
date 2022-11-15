@@ -11,14 +11,15 @@
         $resultados = $conexion->query($sql);
 
         $fila = mysqli_fetch_assoc($resultados);
-        echo $fila['contraseña'] . "<br>";
-        echo "El passworf_verify me da: " . password_verify($contraseñaComp, $fila['contraseña']);
+        
        
         if(password_verify($contraseñaComp, $fila['contraseña'])){
+                // echo "true";
                 $_SESSION['logueado'] = true;
                 $_SESSION['nombreUser'] = $nombreUsuario;
                 header("Location:juego.php");
         }else{
+                // echo "false";
                 $_SESSION['logueado'] = false;
                 header("Location:login.php");   
         }

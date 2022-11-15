@@ -41,6 +41,14 @@ div.form-element {
     flex-direction: column;
     border-radius: 20px;
 }
+div.form-element-error {
+    border-color: tomato;
+    display: flex;
+    justify-content: center;
+    margin: 10px 0;
+    flex-direction: column;
+    border-radius: 20px;
+}
 
 button {
     border-radius: 20px;
@@ -50,11 +58,13 @@ button {
     background: rgb(123, 168, 33);
     color: white;
     border: none;
+    cursor: pointer;
 }
 
 .enlaceRegistro {
     font-size: 1.5rem;
     color: rgb(11, 138, 127);
+    cursor: pointer;
 }
 
 p.success,
@@ -80,4 +90,8 @@ p.error {
     background: rgb(123, 168, 33);
     color: white;
     border: none;
+    cursor: pointer;
+}
+.check{
+    cursor: pointer;
 }

@@ -30,7 +30,6 @@
 
     function validacionContraseñas($variable1, $variable2){
         if($variable1 == $variable2){
-            echo "Entra contraseña y estan bien"   . "<br>";
             return true;
         }else{
             echo "Las contraseñas deben de ser iguales" . "<br>";
@@ -42,7 +41,7 @@
         $permitidos = "a b c d e f g h i j k l m n o p q r s t u v w x y z A B C D E F G H I J K L M N O P Q R S T U V W X Y Z ´";
         $compr = explode(' ', $permitidos);
         if((strlen($variable) < 3 || strlen($variable) > 30)){
-            echo "El nombre debe tener entre 3 y 30 caracteres</p>"  . "<br>";
+            echo "El nombre debe tener entre 3 y 30 caracteres"  . "<br>";
             return false;
         }else{
             for ($i=0; $i<strlen($variable); $i++){

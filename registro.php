@@ -15,6 +15,8 @@
             $contraseña2 = $_POST['contraseña2'];
             $nombre = $_POST['nombre'];
             $apellido = $_POST['apellido'];
+            $error = 'form-element-error';
+            $bien = 'form-element';
 
            
             $comUser = validacionUser($usuario);
@@ -23,9 +25,9 @@
             $comApellido = validacionApellido($apellido);
 
             if(!$comUser || !$comContraseña || $comNombre!=1 || $comApellido !=1){
-                echo "<p class='error'>Hay campos que no has rellenado bien</p>";
+                echo "Hay campos que no has rellenado bien";
             }else{
-                $encriptada = password_hash($contraseña, PASSWORD_DEFAULT);
+                $encriptada = password_hash($contraseña, PASSWORD_BCRYPT);
                 $ins = "INSERT into usuarios values('$usuario', '$encriptada', '$nombre', '$apellido', '')";
                 $insertar = $conexion->query($ins);
                 echo "Bien hecho";
@@ -44,7 +46,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="estilos/login.css">
+    <link rel="stylesheet" href="estilos/loginRegistro.css">
     <title>Document</title>
 </head>
 
@@ -57,11 +59,14 @@
                 <input type='text' id="usuario" name="usuario" placeholder="Usuario"value ="<?php if(!empty($_POST['usuario'])) {echo $_POST['usuario'];}?>" required/><br>
             </div>
             <div class="form-element">
-                
                 <input type='password' id="contraseña" name="contraseña" placeholder="Contraseña" required/><br>
             </div>
             <div class="form-element">
                 <input type='password' id="contraseña2" name="contraseña2" placeholder="Repita contraseña" required/><br>
+            </div>
+            <div id="caja_checkbox">
+                    <input class="check" type="checkbox" name="verContraseña" id="verContraseña">
+                    <label for="verContraseña" id="verContraseñaLabel">Mostrar ambas contraseñas</label>
             </div>
             <div class="form-element">
                 <input type='text' id="nombre" name="nombre" placeholder="Nombre" value="<?php if(!empty($_POST['nombre'])) {echo $_POST['nombre'];}?>" required/><br>
@@ -78,4 +83,25 @@
         </form>
     </div>
 </body>
+<script>
+    {
+        document.getElementById("verContraseña").addEventListener("click", function () {
+
+            var pw = document.getElementById("contraseña");
+            var pw2 = document.getElementById("contraseña2");
+            if (pw.type == "password") {
+                pw.type = "text";
+            } else {
+                pw.type = "password";
+            }
+
+            if(pw2.type == "password"){
+                pw2.type = "text";
+            }else{
+                pw2.type = "password";
+            }
+
+        });
+    }
+</script>
 </html>

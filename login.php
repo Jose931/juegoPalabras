@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="estilos/login.css">
+    <link rel="stylesheet" href="estilos/loginRegistro.css">
     <title>Tu Juego de Palablas</title>
 </head>
 <body>
@@ -21,7 +21,7 @@
                 <input id="password" type="password" name="password" placeholder="contraseña" required />
             </div>
              <div id="caja_checkbox">
-                    <input type="checkbox" name="verContraseña" id="verContraseña">
+                    <input class = "check" type="checkbox" name="verContraseña" id="verContraseña">
                     <label for="verContraseña" id="verContraseñaLabel">Mostrar contraseña</label>
             </div>
             <div>
