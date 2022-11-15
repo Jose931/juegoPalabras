@@ -23,7 +23,7 @@
             $comApellido = validacionApellido($apellido);
 
             if(!$comUser || !$comContraseña || $comNombre!=1 || $comApellido !=1){
-                echo "Hay campos que no has rellenado bien";
+                echo "<p class='error'>Hay campos que no has rellenado bien</p>";
             }else{
                 $encriptada = password_hash($contraseña, PASSWORD_BCRYPT);
                 $ins = "INSERT into usuarios values('$usuario', '$encriptada', '$nombre', '$apellido', '')";

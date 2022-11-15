@@ -3,26 +3,20 @@
 include('config.php');
 session_start();
  
-if (isset($_POST['login'])) {
+if (!empty($_POST['register'])) {
  
     $nombreUsuario = $_POST['username'];
     $contraseñaComp = $_POST['password'];
  
+    $query = "SELECT contraseña FROM usuarios WHERE usuario LIKE '$nombreUsuario'";
+    $resultado = $conexion->query($query) or die($mysqli->error . " en la linea " . (__LINE__-1));
     
-    
- 
-    $result = $query->fetch(PDO::FETCH_ASSOC);
- 
-    if (!$result) {
-        echo '<p class="error">Username password combination is wrong!</p>';
+    if (password_verify($contraseñaComp, $resultado->fetch_column()) == 1) {
+        echo "<br>" . "Deberia entrar por aqui";
     } else {
-        if (password_verify($password, $result['PASSWORD'])) {
-            $_SESSION['user_id'] = $result['ID'];
-            echo '<p class="success">Congratulations, you are logged in!</p>';
-        } else {
-            echo '<p class="error">Username password combination is wrong!</p>';
-        }
+        echo "Entra por donde no debe";
     }
+    
 }
  
 ?>
@@ -39,12 +33,16 @@ if (isset($_POST['login'])) {
 <body>
     <div class="container">
         <h2>Iniciar sesion</h2><br>
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" name="signup-form">
+        <form method="post" action="<?php htmlspecialchars($_SERVER["PHP_SELF"])?>">
             <div class="form-element">
                 <input type="text" name="username" placeholder="Usuario" value="<?php if (isset($username)) echo $username; ?>" required />
             </div>
             <div class="form-element">
-                <input type="password" name="password" placeholder="contraseña" required />
+                <input id="password" type="password" name="password" placeholder="contraseña" required />
+            </div>
+             <div id="caja_checkbox">
+                    <input type="checkbox" name="verContraseña" id="verContraseña">
+                    <label for="verContraseña" id="verContraseñaLabel">Mostrar contraseña</label>
             </div>
             <div>
                 <button type="submit"  name="register" value="register">Entrar</button>
@@ -53,4 +51,18 @@ if (isset($_POST['login'])) {
         </form>
     </div>
 </body>
+<script>
+    {
+        document.getElementById("verContraseña").addEventListener("click", function () {
+
+            var pw = document.getElementById("password");
+            if (pw.type == "password") {
+                pw.type = "text";
+            } else {
+                pw.type = "password";
+            }
+        });
+    }
+</script>
+
 </html>

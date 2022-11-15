@@ -58,7 +58,7 @@ button {
 }
 
 p.success,
-p.error {
+p.correcto {
     color: white;
     background: yellowgreen;
     display: inline-block;
