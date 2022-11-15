@@ -1,25 +1,5 @@
-<?php
- 
-include('config.php');
-session_start();
- 
-if (!empty($_POST['register'])) {
- 
-    $nombreUsuario = $_POST['username'];
-    $contraseñaComp = $_POST['password'];
- 
-    $query = "SELECT contraseña FROM usuarios WHERE usuario LIKE '$nombreUsuario'";
-    $resultado = $conexion->query($query) or die($mysqli->error . " en la linea " . (__LINE__-1));
-    
-    if (password_verify($contraseñaComp, $resultado->fetch_column()) == 1) {
-        echo "<br>" . "Deberia entrar por aqui";
-    } else {
-        echo "Entra por donde no debe";
-    }
-    
-}
- 
-?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -33,7 +13,7 @@ if (!empty($_POST['register'])) {
 <body>
     <div class="container">
         <h2>Iniciar sesion</h2><br>
-        <form method="post" action="<?php htmlspecialchars($_SERVER["PHP_SELF"])?>">
+        <form method="post" action="validacionLogin.php">
             <div class="form-element">
                 <input type="text" name="username" placeholder="Usuario" value="<?php if (isset($username)) echo $username; ?>" required />
             </div>

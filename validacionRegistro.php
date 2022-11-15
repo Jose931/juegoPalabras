@@ -47,10 +47,8 @@
         }else{
             for ($i=0; $i<strlen($variable); $i++){
                 if (in_array(substr($variable, $i, 1), $compr)){
-                    echo "La funcion de nombre da: " . in_array(substr($variable, $i, 1), $compr)   . "<br>";
                     return true;
                 }else{
-                    echo "<p class='error'>Nombre mal escrito. No se pueden meter parametros extraños en nombre.";
                     return false;
                 }
             }
@@ -67,7 +65,6 @@
         }else{
             for ($i=0; $i<strlen($variable); $i++){
                 if (in_array(substr($variable, $i, 1), $compr)){
-                    echo "La funcion de apellido da: " . in_array(substr($variable, $i, 1), $compr)   . "<br>";
                     return true;
                 }else{
                     echo "Apellido mal escrito. No se pueden meter parametros extraños en nombre.";

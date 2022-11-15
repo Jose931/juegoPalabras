@@ -25,7 +25,7 @@
             if(!$comUser || !$comContraseña || $comNombre!=1 || $comApellido !=1){
                 echo "<p class='error'>Hay campos que no has rellenado bien</p>";
             }else{
-                $encriptada = password_hash($contraseña, PASSWORD_BCRYPT);
+                $encriptada = password_hash($contraseña, PASSWORD_DEFAULT);
                 $ins = "INSERT into usuarios values('$usuario', '$encriptada', '$nombre', '$apellido', '')";
                 $insertar = $conexion->query($ins);
                 echo "Bien hecho";
