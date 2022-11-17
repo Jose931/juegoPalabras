@@ -33,20 +33,20 @@ function existePalabra(){
         $consulta = $conexion->query("SELECT nombre_palabra from palabras");
         $palabras = [];
         
-            foreach($consulta as $fila){
-                foreach($fila as $dato){
-                    $palabras[] = $dato;
-                }
+        foreach($consulta as $fila){
+            foreach($fila as $dato){
+                $palabras[] = $dato;
             }
+        }
         
 
         for($i = 0; $i < count($palabras); $i++){
             if($palabraValidar == $palabras[$i]){
-                echo "valida base de datos.";
                 return true;
             }
         }
-        echo "no valida base de datos." . "<br>";
+        echo "Tu palabra no existe o no la tenemos en nuestro registro." . "<br>";
+
         return false;
     }catch(Exception $e){
         echo "Error al conectar con la base de datos: " . $e->getMessage();
@@ -58,12 +58,9 @@ function compararPalabras(){
     
     $palabraArray = $_SESSION['palabrasAcertadas'][count($_SESSION['palabrasAcertadas']) - 1];
     $palabraValidar = $_SESSION['palabraIntroducida'];
-    echo $palabraArray . "<br>";
     if(substr($palabraArray, -2, 2) == substr($palabraValidar, 0, 2)){
-        echo "valida comparacion" . "<br>";
         return true;
     }
-    echo "no valida comparacion" . "<br>";
     return false;
 }
 
@@ -71,15 +68,17 @@ function palabraUsada(){
     $palabrasAcertadas = $_SESSION['palabrasAcertadas'];
     $palabraVer = $_SESSION['palabraIntroducida'];
     if(in_array($palabraVer, $palabrasAcertadas)){
-        echo "Palabra usada" . "<br>";
+        echo "Palabra usada. No puedes repetir palabras." . "<br>";
         return false;
     }
-    echo "Palabra no usada" . "<br>";
     return true;
 
 }
 
 function mostrarPalabras($variable){
-    print_r($variable);
+    echo "Tus palabras encadenadas son: ";
+    for($i = 0;$i < count($variable); $i++){
+        echo $variable[$i] . " -> ";
+    }
 }
 ?>
