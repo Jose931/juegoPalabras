@@ -1,5 +1,7 @@
 <?php
 
+include("funcionesJuego.php");
+
 session_start();
 if(!isset($_SESSION['logueado']) || !$_SESSION['logueado']){
     header("Location:login.php");
@@ -8,74 +10,9 @@ if(!isset($_SESSION['logueado']) || !$_SESSION['logueado']){
     echo "<p>Hola " . $_SESSION['nombreUser'] ."<p>" ."<br>";
 }
 
-function generarPalabra(){
-    try {
-        $conexion = new mysqli('localhost', 'root', '','juego_palabras');
-        $numeroPalabra = random_int(0,77);
-        $consulta = $conexion->query("SELECT nombre_palabra FROM palabras where id_palabra = $numeroPalabra");
-        
-        foreach($consulta as $fila){
-            $palabra = $fila['nombre_palabra'];
-        }
+$contador = 0;
 
-        return $palabra;
-        
-
-
-    } catch (Exception $e) {
-        echo 'Error con la base de datos: ' . $e->getMessage();
-    }
-}
-
-function existePalabra(){
-    if(isset($_POST['comprobarPalabra'])){
-        $palabraValidar = $_POST['palabraUsuario'];
-        $_SESSION['palabraValidar'] = strtolower($palabraValidar);
-        try{
-            $conexion = new mysqli('localhost', 'root', '','juego_palabras');
-            $consulta = $conexion->query("SELECT nombre_palabra from palabras");
-            $palabras = [];
-
-            foreach($consulta as $fila){
-                foreach($fila as $dato){
-                    $palabras[] = $dato;
-                }
-            }
-
-            for($i = 0; $i < count($palabras); $i++){
-                if($palabraValidar == $palabras[$i]){
-                    echo "valida base de datos.";
-                    return true;
-                }
-            }
-            echo "no valida base de datos.";
-            return false;
-        }catch(Exception $e){
-            echo "Error al conectar con la base de datos: " . $e->getMessage();
-        }
-    }
-}
-
-function compararPalabras(){
-    $palabra = $_SESSION['palabra'];
-    $palabraValidar = $_SESSION['palabraValidar'];
-    if(substr($palabra, -2, 2) == substr($palabraValidar, 0, 2)){
-        echo "valida comparacion";
-        return true;
-    }
-    echo "no valida comparacion";
-    return false;
-}
-
-function palabraCorrecta(){
-    if(existePalabra() && compararPalabras()){
-        echo "La palabra " . $_SESSION['palabraValidar'] . " es correcta.";
-    }
-}
-if(isset($_POST['comprobarPalabra'])){
-    echo $_SESSION['palabraValidar'];
-}
-
+$palabrasEncadenadas = [];
 
 
 
@@ -91,13 +28,13 @@ if(isset($_POST['comprobarPalabra'])){
 </head>
 <body>
     <div class="">
-        <h2>Palabras encadenadas: el juego consiste en hacer una cadena de palabras. 
+        <!-- <h2>Palabras encadenadas: el juego consiste en hacer una cadena de palabras. 
             La maquina pondra una palabra por defecto, por ejemplo “casa”, y tienes que 
             decir otra palabra que empiece por las dos ultimas letras de la palabra dicha, 
             siguiendo con el ejemplo “sapo”, “posada”, “dama”, y así sucesivamente. Si aciertas 
             se te sumaran dos puntos. Tendras tres oprtunidades para fallar. Por cada fallo se restaran 
             dos puntos. Suerte!
-        </h2>
+        </h2> -->
     </div>
     <div>
 
@@ -106,12 +43,13 @@ if(isset($_POST['comprobarPalabra'])){
         <div>
             <p>
                 <?php
-                    if(!isset($_POST['comprobarPalabra'])){
-                        $palabra = generarPalabra();
-                        $_SESSION['palabra'] = $palabra;
-                        echo "La primera palabra es: " . $palabra;
-                    }
-            
+                   if(!isset($_POST['comprobarPalabra'])){
+                    $palabra = generarPalabra();
+                    $_SESSION['palabra'] = $palabra;
+                    echo "La primera palabra es: " . $palabra;
+                    $palabrasEncadenadas[] = $palabra;
+                    
+                }
                 ?>
             </p>
         </div>
@@ -119,8 +57,7 @@ if(isset($_POST['comprobarPalabra'])){
             <p>
                 <?php
                     if(isset($_POST['comprobarPalabra'])){
-                        $exite = existePalabra();
-                        $valida = compararPalabras();
+                        echo "Entra en el bloque de codigo";
                         if(existePalabra() && compararPalabras()){
                             echo "Comprueba bien";
                         }else{
@@ -132,9 +69,9 @@ if(isset($_POST['comprobarPalabra'])){
                 ?>
 
             </p>
-        </div>
+        </div> 
         <div>
-            <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"])?>" method=POS>
+            <form  method=POS>
                 <input type="text" name='palabraUsuario' placeholder="escribe aqui">
                 <input class="enviar" type="submit" id="comprobarPalabra" name="comprobarPalabra">
             </form>

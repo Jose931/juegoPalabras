@@ -14,6 +14,7 @@
                         $palabras[] = $dato;
                     }
                 }
+                
     
                 for($i = 0; $i < count($palabras); $i++){
                     if($palabraValidar == $palabras[$i]){
