@@ -1,8 +1,8 @@
 <?php
 
-include("funcionesJuego.php");
+include('funcionesJuego.php');
 
-session_start();
+
 if(!isset($_SESSION['logueado']) || !$_SESSION['logueado']){
     header("Location:login.php");
     
@@ -10,7 +10,7 @@ if(!isset($_SESSION['logueado']) || !$_SESSION['logueado']){
     echo "<p>Hola " . $_SESSION['nombreUser'] ."<p>" ."<br>";
 }
 
-$contador = 0;
+
 
 $palabrasEncadenadas = [];
 
@@ -32,7 +32,7 @@ $palabrasEncadenadas = [];
             La maquina pondra una palabra por defecto, por ejemplo “casa”, y tienes que 
             decir otra palabra que empiece por las dos ultimas letras de la palabra dicha, 
             siguiendo con el ejemplo “sapo”, “posada”, “dama”, y así sucesivamente. Si aciertas 
-            se te sumaran dos puntos. Tendras tres oprtunidades para fallar. Por cada fallo se restaran 
+            se te sumaran cinco puntos. Tendras tres oprtunidades para fallar. Por cada fallo se restaran 
             dos puntos. Suerte!
         </h2> -->
     </div>
@@ -41,37 +41,39 @@ $palabrasEncadenadas = [];
     </div>    
     <div >
         <div>
-            <p>
+            <h2>
                 <?php
-                   if(!isset($_POST['comprobarPalabra'])){
+                   if(!isset($_POST['comprobarPalabra']) && $_SESSION['primeraPalabra']) {
+                    $_SESSION['primeraPalabra'] = false;
                     $palabra = generarPalabra();
-                    $_SESSION['palabra'] = $palabra;
-                    echo "La primera palabra es: " . $palabra;
-                    $palabrasEncadenadas[] = $palabra;
-                    
-                }
+                    $_SESSION['palabra'][] = $palabra;
+                    $_SESSION['palabrasAcertadas'][] = $_SESSION['palabra'][0]; 
+                    echo "La primera palabra es: " .$_SESSION['palabra'][0];
+                    }else{
+                        if(!empty($_POST['palabraUsuario'])){
+                            $_SESSION['palabraIntroducida'] = $_POST['palabraUsuario'];
+
+                            if(existePalabra() && compararPalabras() && palabraUsada()){
+                                $_SESSION['palabrasAcertadas'][] = $_SESSION['palabraIntroducida'];
+                                echo "Has acertado con " . $_SESSION['palabraIntroducida'];
+                            }
+                             mostrarPalabras($_SESSION['palabrasAcertadas']);
+                        }else{
+                            echo "Tienes que escribir la palabra.<br>";
+
+                        }
+
+                        
+                       
+                    }
                 ?>
-            </p>
+            </h2>
         </div>
         <div>
-            <p>
-                <?php
-                    if(isset($_POST['comprobarPalabra'])){
-                        echo "Entra en el bloque de codigo";
-                        if(existePalabra() && compararPalabras()){
-                            echo "Comprueba bien";
-                        }else{
-                            echo "Comprueba mal";
-                        }
-                        
-                    }
-
-                ?>
-
-            </p>
-        </div> 
+            <p></p>
+        </div>
         <div>
-            <form  method=POS>
+            <form  method='POST'>
                 <input type="text" name='palabraUsuario' placeholder="escribe aqui">
                 <input class="enviar" type="submit" id="comprobarPalabra" name="comprobarPalabra">
             </form>

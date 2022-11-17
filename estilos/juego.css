@@ -2,15 +2,15 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-} */
+} 
 
-/* body {
+ body {
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
     margin: 50px auto;
     width: 800px;
     background-color: rgb(45, 201, 149);
-} */
+}
 .container {
     border-radius: 20px;
     margin: 25px auto;
@@ -22,5 +22,5 @@
 
 p{
     font-family: Arial, Helvetica, sans-serif;
-}
-
+} 
+ */

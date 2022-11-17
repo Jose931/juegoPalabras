@@ -3,7 +3,7 @@
         
             // $palabraValidar = $_POST['palabraUsuario'];
             // $_SESSION['palabraValidar'] = strtolower($palabraValidar);
-            $palabraValidar = 'jamon';
+            $palabraValidar = 'monja';
             try{
                 $conexion = new mysqli('localhost', 'root', '','juego_palabras');
                 $consulta = $conexion->query("SELECT nombre_palabra from palabras");
@@ -33,7 +33,7 @@
 
     function compararPalabras(){
         $palabra = 'naranja';
-        $palabraValidar = 'jamon';
+        $palabraValidar = 'monja';
         if(substr($palabra, -2, 2) == substr($palabraValidar, 0, 2)){
             echo "valida comparacion ";
             return true;
