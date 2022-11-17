@@ -1,6 +1,6 @@
 <?php
     include("validacionRegistro.php");
-    include("config.php");
+    require("config.php");
 
 
     
@@ -72,7 +72,7 @@
                 <input type='text' id="nombre" name="nombre" placeholder="Nombre" value="<?php if(!empty($_POST['nombre'])) {echo $_POST['nombre'];}?>" required/><br>
             </div>
             <div class="form-element">
-                <input type='text' id="apellido" name="apellido" placeholder="Apellido" value="<?php if(!empty($_POST['apellido'])) {echo $_POST['apellido'];}?>" name="apellido" placeholder="Primer apellido" value="<?php if(!empty($_POST['apellido'])) {echo $_POST['apellido'];}?>" required/><br>
+                <input type='text' id="apellido" name="apellido" placeholder="Apellido"  name="apellido" placeholder="Primer apellido" value="<?php if(!empty($_POST['apellido'])) {echo $_POST['apellido'];}?>" required/><br>
             </div>
             <br>
 

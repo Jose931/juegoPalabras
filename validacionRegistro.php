@@ -4,26 +4,27 @@
     function validacionUser($variable){
         try {
             $conexion = new mysqli('localhost', 'root', '','juego_palabras');
+            $sentencia = $conexion->query("SELECT usuario FROM usuarios");
+            $usuarios=[];
+
+            foreach($sentencia as $fila){
+                foreach($fila as $dato){
+                    $usuarios[] = $dato;
+                }
+
+            }
+
+            for($i = 0; $i < count($usuarios); $i++){
+                    if($variable == $usuarios[$i]){
+                        echo "Ya existe este usuario. Por favor elige uno nuevo" . "<br>";
+                        return false;
+                    }
+            }
+            return true;
         } catch (Exception $e) {
             echo 'Error con la base de datos: ' . $e->getMessage();
         }
-        $sentencia = $conexion->query("SELECT usuario FROM usuarios");
-        $usuarios=[];
-
-       foreach($sentencia as $fila){
-           foreach($fila as $dato){
-               $usuarios[] = $dato;
-           }
-
-       }
-
-       for($i = 0; $i < count($usuarios); $i++){
-            if($variable == $usuarios[$i]){
-                echo "Ya existe este usuario. Por favor elige uno nuevo" . "<br>";
-                return false;
-            }
-       }
-       return true;
+        
     }
         
     
