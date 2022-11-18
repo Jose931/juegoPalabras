@@ -28,8 +28,10 @@
                 echo "Hay campos que no has rellenado bien";
             }else{
                 $encriptada = password_hash($contraseña, PASSWORD_BCRYPT);
-                $ins = "INSERT into usuarios values('$usuario', '$encriptada', '$nombre', '$apellido', '')";
-                $insertar = $conexion->query($ins);
+                $insertUsuarios = "INSERT into usuarios values('$usuario', '$encriptada')";
+                $insertJugadores = "INSERT into jugadores values ('$usuario', '$nombre', '$apellido', '')";
+                $insertar = $conexion->query($insertUsuarios);
+                $insertar = $conexion ->query($insertJugadores);
                 echo "Bien hecho";
 
                 header("Location:login.php");

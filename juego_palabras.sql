@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-11-2022 a las 00:00:07
+-- Tiempo de generación: 19-11-2022 a las 00:12:17
 -- Versión del servidor: 10.4.24-MariaDB
 -- Versión de PHP: 8.1.6
 
@@ -20,6 +20,19 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `juego_palabras`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `jugadores`
+--
+
+CREATE TABLE `jugadores` (
+  `usuario` varchar(50) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `apellido` varchar(50) NOT NULL,
+  `puntos` int(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -124,15 +137,18 @@ INSERT INTO `palabras` (`id_palabra`, `nombre_palabra`) VALUES
 
 CREATE TABLE `usuarios` (
   `usuario` varchar(30) NOT NULL,
-  `contraseña` varchar(250) NOT NULL,
-  `nombre` varchar(150) NOT NULL,
-  `apellido` varchar(150) NOT NULL,
-  `puntos` int(5) NOT NULL
+  `contraseña` varchar(250) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `jugadores`
+--
+ALTER TABLE `jugadores`
+  ADD PRIMARY KEY (`usuario`);
 
 --
 -- Indices de la tabla `palabras`
