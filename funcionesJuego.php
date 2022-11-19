@@ -24,7 +24,6 @@ function generarPalabra(){
 
 function existePalabra(){
    
-
     $palabraValidar = $_SESSION['palabraIntroducida'];
        
     try{
@@ -38,14 +37,13 @@ function existePalabra(){
                 $palabras[] = $dato;
             }
         }
-        
 
         for($i = 0; $i < count($palabras); $i++){
             if($palabraValidar == $palabras[$i]){
                 return true;
             }
         }
-        echo "Tu palabra no existe o no la tenemos en nuestro registro." . "<br>";
+        echo "Tu palabra no existe o no la tenemos en nuestro registro. Se te restan 2pt!" . "<br>";
 
         return false;
     }catch(Exception $e){
@@ -61,6 +59,7 @@ function compararPalabras(){
     if(substr($palabraArray, -2, 2) == substr($palabraValidar, 0, 2)){
         return true;
     }
+    echo "No es una palabra enlazada. Se te restan 2pt!" . "<br>";
     return false;
 }
 
@@ -68,7 +67,7 @@ function palabraUsada(){
     $palabrasAcertadas = $_SESSION['palabrasAcertadas'];
     $palabraVer = $_SESSION['palabraIntroducida'];
     if(in_array($palabraVer, $palabrasAcertadas)){
-        echo "Palabra usada. No puedes repetir palabras." . "<br>";
+        echo "Palabra usada. No puedes repetir palabras. Se te restan 2pt!" . "<br>";
         return false;
     }
     return true;
@@ -78,7 +77,39 @@ function palabraUsada(){
 function mostrarPalabras($variable){
     echo "Tus palabras encadenadas son: ";
     for($i = 0;$i < count($variable); $i++){
-        echo $variable[$i] . " -> ";
+        echo $variable[$i] . " => ";
+    }
+}
+
+function insertarPuntosBd(){
+    try {
+        $puntuacion = $_SESSION['puntuacion'];
+        $conexion = new mysqli('localhost', 'root', '','juego_palabras');
+        $usuarioJugando = $_SESSION['nombreUser'];
+        $buscarPuntuacion = $conexion->query("SELECT puntos from jugadores where nombre = '$usuarioJugando'");
+        foreach($buscarPuntuacion as $fila){
+            $puntuacionTotal = $fila['puntos'];
+        }
+        $puntuacionTotal= $puntuacionTotal + $puntuacion;
+        $conexion->query("UPDATE jugadores set puntos = $puntuacionTotal where usuario = '$usuarioJugando'");
+        
+    } catch (Exception $e) {
+        echo 'Error con la base de datos: ' . $e->getMessage();
+    }
+}
+
+function puntosTotales(){
+    try {
+        $conexion = new mysqli('localhost', 'root', '','juego_palabras');
+        $usuarioJugando = $_SESSION['nombreUser'];
+        $buscarPuntuacion = $conexion->query("SELECT puntos from jugadores where usuario = '$usuarioJugando'");
+        foreach($buscarPuntuacion as $fila){
+                $puntuacion = $fila['puntos'];
+
+        }
+        return $puntuacion;
+    } catch (Exception $e) {
+        echo 'Error con la base de datos: ' . $e->getMessage();
     }
 }
 ?>

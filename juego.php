@@ -1,8 +1,7 @@
 <?php
 
 include('funcionesJuego.php');
-
-
+require('config.php');
 
 if(!isset($_SESSION['logueado']) || !$_SESSION['logueado']){
     header("Location:login.php");
@@ -10,12 +9,6 @@ if(!isset($_SESSION['logueado']) || !$_SESSION['logueado']){
 }else{
     echo "<p>Hola " . $_SESSION['nombreUser'] ."<p>" ."<br>";
 }
-
-
-
-$palabrasEncadenadas = [];
-
-
 
 ?>
 <!DOCTYPE html>
@@ -25,7 +18,7 @@ $palabrasEncadenadas = [];
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="estilos/juego.css">
-    <title>Document</title>
+    <title>Palabras Encadenadas</title>
 </head>
 <body>
     <div class="">
@@ -62,7 +55,7 @@ $palabrasEncadenadas = [];
                                 if(existePalabra() && compararPalabras() && palabraUsada()){
                                     $_SESSION['palabrasAcertadas'][] = $_SESSION['palabraIntroducida'];
                                     $_SESSION['puntuacion'] += 5;
-                                    echo "Has acertado con " . $_SESSION['palabraIntroducida'] .". Se  te suman 5ptx!" ."<br>";
+                                    echo "Has acertado con " . $_SESSION['palabraIntroducida'] .". Se  te suman 5pt!" ."<br>";
                                     echo "Intentos: " . $_SESSION['intentos'] . "<br>";
                                     echo "Puntuación: " . $_SESSION['puntuacion'] . "<br>";
                                 }else{
@@ -79,7 +72,10 @@ $palabrasEncadenadas = [];
                                 mostrarPalabras($_SESSION['palabrasAcertadas']);
                             }   
                         }else{
-                            echo "Has perdido! Tu puntuacion en la partida es de " . $_SESSION['puntuacion'];
+                            echo "Has perdido! Tu puntuacion en la partida es de " . $_SESSION['puntuacion'] . "<br>";
+                            insertarPuntosBd();
+                            $puntuacionGlobal = puntosTotales();
+                            echo "Tu puntuacion global es de: " . $puntuacionGlobal . "<br>";
                         }
                         
                     }

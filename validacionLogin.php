@@ -12,7 +12,6 @@
 
         $fila = mysqli_fetch_assoc($resultados);
         
-       
         if(password_verify($contraseñaComp, $fila['contraseña'])){
                 $_SESSION['logueado'] = true;
                 $_SESSION['nombreUser'] = $nombreUsuario;
