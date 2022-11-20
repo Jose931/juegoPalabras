@@ -26,7 +26,7 @@
             </div>
             <div>
                 <button type="submit"  name="register" value="register">Entrar</button>
-                <a class="enlaceRegistro" href="registro.php">¿No tienes cuenta?</a>
+                <a class="enlaceRegistro" href="registro.php" style="text-decoration: none" ;>¿No tienes cuenta?</a>
             </div>
         </form>
     </div>

@@ -1,6 +1,7 @@
 <?php
 
         require('config.php');
+        include('funcionesJuego.php');
         session_start();
 
         $nombreUsuario = $_POST['username'];
@@ -15,6 +16,8 @@
         if(password_verify($contraseñaComp, $fila['contraseña'])){
                 $_SESSION['logueado'] = true;
                 $_SESSION['nombreUser'] = $nombreUsuario;
+                $_SESSION['partida'] = 1;
+                crearCookie($_SESSION['partida']);
                 header("Location:juego.php");
         }else{
                 $_SESSION['logueado'] = false;

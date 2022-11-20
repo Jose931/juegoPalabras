@@ -80,7 +80,7 @@
 
             <div class="botonFormulario">
                 <input class="enviar" type="submit" id="registrar" name="registrar">
-                <a class="enlaceRegistro" href="login.php">¿Ya tienes cuenta?</a>
+                <a class="enlaceRegistro" href="login.php" style="text-decoration:none">¿Ya tienes cuenta?</a>
             </div>
         </form>
     </div>

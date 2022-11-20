@@ -44,7 +44,7 @@ function existePalabra(){
                 return true;
             }
         }
-        echo "Tu palabra no existe o no la tenemos en nuestro registro. Se te restan 2pt!" . "<br>";
+        echo "<p>Tu palabra no existe o no la tenemos en nuestro registro. Se te restan 2pt!" . "</p>";
 
         return false;
     }catch(Exception $e){
@@ -61,7 +61,7 @@ function compararPalabras(){
     if(substr($palabraArray, -2, 2) == substr($palabraValidar, 0, 2)){
         return true;
     }
-    echo "No es una palabra enlazada. Se te restan 2pt!" . "<br>";
+    echo "<p>No es una palabra enlazada. Se te restan 2pt!" . "</p>";
     return false;
 }
 
@@ -69,7 +69,7 @@ function palabraUsada(){
     $palabrasAcertadas = $_SESSION['palabrasAcertadas'];
     $palabraVer = $_SESSION['palabraIntroducida'];
     if(in_array($palabraVer, $palabrasAcertadas)){
-        echo "Palabra usada. No puedes repetir palabras. Se te restan 2pt!" . "<br>";
+        echo "<p>Palabra usada. No puedes repetir palabras. Se te restan 2pt!" . "</p>";
         return false;
     }
     return true;
@@ -77,10 +77,11 @@ function palabraUsada(){
 }
 
 function mostrarPalabras($variable){
-    echo "Tus palabras encadenadas son: ";
+    echo "<p>Tus palabras encadenadas son: ";
     for($i = 0;$i < count($variable); $i++){
-        echo $variable[$i] . " => ";
+        echo  $variable[$i] . " => ";
     }
+    echo "</p>";
 }
 
 function insertarPuntosBd(){
@@ -92,7 +93,7 @@ function insertarPuntosBd(){
         foreach($buscarPuntuacion as $fila){
             $puntuacionTabla = $fila['puntos'];
         }
-        echo "Tu puntuacion era de: " . $puntuacionTabla . "<br>";
+        echo "<p>Tu puntuacion era de: " . $puntuacionTabla . "</p>";
         $puntuacionTotal = $puntuacion + $puntuacionTabla;
         $conexion->query("UPDATE jugadores set puntos = $puntuacionTotal where usuario = '$usuarioJugando'");
     }catch (Exception $e){
@@ -115,6 +116,33 @@ function puntosTotales(){
         echo 'Error con la base de datos: ' . $e->getMessage();
     }
     $conexion->close();
+}
+
+function ranking(){
+    try{
+    $conexion = new mysqli('localhost', 'root', '','juego_palabras'); 
+    $rankingUsuarios = [];
+    $sacarRanking = $conexion->query("SELECT usuario, puntos from jugadores  ORDER BY puntos DESC LIMIT 3");
+    
+    foreach($sacarRanking as $fila){
+        $rankingUsuarios[] = [$fila['usuario'] => $fila['puntos']];  
+    }
+    return $rankingUsuarios;
+    }catch (Exception $e) {
+        echo 'Error con la base de datos: ' . $e->getMessage();
+    }
+    $conexion->close();
+}
+function imprimirRanking($rankingIm){
+    echo"<div>";
+    foreach($rankingIm as $key => $value){
+        echo "<p>";
+        foreach($value as $key2 => $value2){
+            echo $key2 . " : " . $value2 . " px";
+        }
+        echo "</p>";
+    }
+    echo "</div>";
 }
 
 function crearCookie($numPartidas){
