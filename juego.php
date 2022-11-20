@@ -5,8 +5,6 @@ require('config.php');
 
 if (!isset($_SESSION['logueado']) || !$_SESSION['logueado']) {
     header("Location:login.php");
-} else {
-    echo "<p class ='usuario'>Hola " . $_SESSION['nombreUser'] . "</p>";
 }
 
 ?>
@@ -22,6 +20,7 @@ if (!isset($_SESSION['logueado']) || !$_SESSION['logueado']) {
 </head>
 
 <body>
+    <p class='usuario'>Hola "<?php echo $_SESSION['nombreUser'] ?></p>
     <div class="general">
         <div class="parrafo">
             <p>Palabras encadenadas: el juego consiste en hacer una cadena de palabras.
@@ -44,9 +43,15 @@ if (!isset($_SESSION['logueado']) || !$_SESSION['logueado']) {
                 echo "<div class='informacion'>";
                 echo "<p class= 'juego'>Intentos: " . $_SESSION['intentos'] . "</p>";
                 echo "<p>Puntuación: " . $_SESSION['puntuacion'] . "</p>";
-                echo "<p>Partida: " . $_COOKIE['partidas'] . "</p>";
+                echo "<p>Partida en sesion: " . $_COOKIE['partidas'] . "</p>";
                 echo "<p>La primera palabra es: " . $_SESSION['palabra'][0] . "</p>";
                 echo "</div>";
+                echo "<div>
+                        <form method='POST'>
+                            <input  type='text' name='palabraUsuario' placeholder='escribe aqui'>
+                            <input class='enviar' type='submit' id='comprobarPalabra' name='comprobarPalabra'>
+                        </form>
+                    </div>";
             } else {
                 if ($_SESSION['intentos'] > 1) {
                     if (!empty($_POST['palabraUsuario'])) {
@@ -55,29 +60,40 @@ if (!isset($_SESSION['logueado']) || !$_SESSION['logueado']) {
                         if (existePalabra() && compararPalabras() && palabraUsada()) {
                             $_SESSION['palabrasAcertadas'][] = $_SESSION['palabraIntroducida'];
                             $_SESSION['puntuacion'] += 5;
-                            
+
                             echo "<p>Has acertado con " . $_SESSION['palabraIntroducida'] . ". Se  te suman 5pt!" . "</p>";
                             echo "<p>Intentos: " . $_SESSION['intentos'] . "</p>";
                             echo "<p>Puntuación: " . $_SESSION['puntuacion'] . "</p>";
-                            echo "<p>Partida: " . $_COOKIE['partidas'] . "</p>";
+                            echo "<p>Partida en sesion: " . $_COOKIE['partidas'] . "</p>";
                         } else {
                             $_SESSION['puntuacion'] -= 2;
                             $_SESSION['intentos']--;
                             echo "<p>Intentos: " . $_SESSION['intentos'] . "</p>";
                             echo "<p>Puntuación: " . $_SESSION['puntuacion'] . "</p>";
-                            echo "<p>Partida: " . $_COOKIE['partidas'] . "</p>";
-                            
+                            echo "<p>Partida en sesion: " . $_COOKIE['partidas'] . "</p>";
                         }
                         mostrarPalabras($_SESSION['palabrasAcertadas']);
                         echo "</div>";
+                        echo "<div>
+                                <form method='POST'>
+                                    <input  type='text' name='palabraUsuario' placeholder='escribe aqui'>
+                                    <input class='enviar' type='submit' id='comprobarPalabra' name='comprobarPalabra'>
+                                </form>
+                            </div>";
                     } else {
                         echo "<div class='informacion'>";
                         echo "<p>Tienes que escribir la palabra.</p>";
                         echo "<p>Intentos: " . $_SESSION['intentos'] . "</p>";
                         echo "<p>Puntuación: " . $_SESSION['puntuacion'] . "</p>";
-                        echo "<p>Partida: " . $_COOKIE['partidas'] . "</p>";
+                        echo "<p>Partida en sesion: " . $_COOKIE['partidas'] . "</p>";
                         mostrarPalabras($_SESSION['palabrasAcertadas']);
                         echo "</div>";
+                        echo "<div>
+                                <form method='POST'>
+                                    <input  type='text' name='palabraUsuario' placeholder='escribe aqui'>
+                                    <input class='enviar' type='submit' id='comprobarPalabra' name='comprobarPalabra'>
+                                </form>
+                            </div>";
                     }
                 } else {
                     echo "<div class='informacion'>";
@@ -88,7 +104,7 @@ if (!isset($_SESSION['logueado']) || !$_SESSION['logueado']) {
                     $ranking = ranking();
                     echo "<p>Los tres mejores son: </p>";
                     imprimirRanking($ranking);
-                    echo "</div>";
+                    echo "</div >";
                     echo "<div>";
                     echo "<form  method='POST'>
                                         <input type='submit' id='volverJugar' name='volverJugar' value='¿Volver a jugar?'>
@@ -98,18 +114,13 @@ if (!isset($_SESSION['logueado']) || !$_SESSION['logueado']) {
                         $_SESSION['primeraPalabra'] = true;
                         unset($_SESSION['palabrasAcertadas']);
                         unset($_SESSION['palabra']);
-                        $_COOKIE['partidas'] += 1;
+                        $_SESSION['partida'] += 1;
+                        crearCookie($_SESSION['partida']);
                     }
                 }
             }
             ?>
 
-        </div>
-        <div>
-            <form method='POST'>
-                <input  type="text" name='palabraUsuario' placeholder="escribe aqui">
-                <input class="enviar" type="submit" id="comprobarPalabra" name="comprobarPalabra">
-            </form>
         </div>
         <div class="logout">
             <a href="logout.php">Cerrar sesion</a>
