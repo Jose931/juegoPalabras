@@ -13,13 +13,14 @@ function generarPalabra(){
             $palabra = $fila['nombre_palabra'];
         }
 
-        return $palabra;
+        return 'calmada';
         
 
 
     } catch (Exception $e) {
         echo 'Error con la base de datos: ' . $e->getMessage();
     }
+    $conexion->close();
 }
 
 function existePalabra(){
@@ -49,6 +50,7 @@ function existePalabra(){
     }catch(Exception $e){
         echo "Error al conectar con la base de datos: " . $e->getMessage();
     }
+    $conexion->close();
 }
 
 
@@ -82,20 +84,21 @@ function mostrarPalabras($variable){
 }
 
 function insertarPuntosBd(){
-    try {
+    try{
         $puntuacion = $_SESSION['puntuacion'];
         $conexion = new mysqli('localhost', 'root', '','juego_palabras');
         $usuarioJugando = $_SESSION['nombreUser'];
-        $buscarPuntuacion = $conexion->query("SELECT puntos from jugadores where nombre = '$usuarioJugando'");
+        $buscarPuntuacion = $conexion->query("SELECT puntos from jugadores where usuario = '$usuarioJugando'");
         foreach($buscarPuntuacion as $fila){
-            $puntuacionTotal = $fila['puntos'];
+            $puntuacionTabla = $fila['puntos'];
         }
-        $puntuacionTotal= $puntuacionTotal + $puntuacion;
+        echo "Tu puntuacion era de: " . $puntuacionTabla . "<br>";
+        $puntuacionTotal = $puntuacion + $puntuacionTabla;
         $conexion->query("UPDATE jugadores set puntos = $puntuacionTotal where usuario = '$usuarioJugando'");
-        
-    } catch (Exception $e) {
+    }catch (Exception $e){
         echo 'Error con la base de datos: ' . $e->getMessage();
     }
+    $conexion->close();
 }
 
 function puntosTotales(){
@@ -111,5 +114,10 @@ function puntosTotales(){
     } catch (Exception $e) {
         echo 'Error con la base de datos: ' . $e->getMessage();
     }
+    $conexion->close();
+}
+
+function crearCookie($numPartidas){
+    setcookie('partidas', $numPartidas , time()+3600, '/');
 }
 ?>

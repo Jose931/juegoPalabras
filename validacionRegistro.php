@@ -24,6 +24,7 @@
         } catch (Exception $e) {
             echo 'Error con la base de datos: ' . $e->getMessage();
         }
+        $conexion->close();
         
     }
         

@@ -20,5 +20,6 @@
                 $_SESSION['logueado'] = false;
                 header("Location:login.php");   
         }
+        $conexion->close();
     
 ?>

@@ -9,7 +9,7 @@ if(!isset($_SESSION['logueado']) || !$_SESSION['logueado']){
 }else{
     echo "<p>Hola " . $_SESSION['nombreUser'] ."<p>" ."<br>";
 }
-
+$_SESSION['partida'] = 1;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,6 +38,7 @@ if(!isset($_SESSION['logueado']) || !$_SESSION['logueado']){
             <h2>
                 <?php
                    if(!isset($_POST['comprobarPalabra']) && $_SESSION['primeraPalabra']) {
+                    crearCookie($_SESSION['partida']);
                     $_SESSION['primeraPalabra'] = false;
                     $_SESSION['puntuacion'] = 0;
                     $_SESSION['intentos'] = 3;
@@ -45,7 +46,8 @@ if(!isset($_SESSION['logueado']) || !$_SESSION['logueado']){
                     $_SESSION['palabra'][] = $palabra;
                     $_SESSION['palabrasAcertadas'][] = $_SESSION['palabra'][0];
                     echo "Intentos: " . $_SESSION['intentos'] . "<br>";
-                    echo "Puntuación: " . $_SESSION['puntuacion'] . "<br>";  
+                    echo "Puntuación: " . $_SESSION['puntuacion'] . "<br>";
+                    echo "Partida: " . $_COOKIE['partidas'] . "<br>"; 
                     echo "La primera palabra es: " .$_SESSION['palabra'][0];
                     }else{
                         if($_SESSION['intentos'] > 1){
@@ -63,12 +65,14 @@ if(!isset($_SESSION['logueado']) || !$_SESSION['logueado']){
                                     $_SESSION['intentos']--;
                                     echo "Intentos: " . $_SESSION['intentos'] . "<br>";
                                     echo "Puntuación: " . $_SESSION['puntuacion'] . "<br>";
+                                    echo "Partida: " . $_COOKIE['partidas'] . "<br>";
                                 }
                                  mostrarPalabras($_SESSION['palabrasAcertadas']);
                             }else{
                                 echo "Tienes que escribir la palabra.<br>";
                                 echo "Intentos: " . $_SESSION['intentos'] . "<br>";
                                 echo "Puntuación: " . $_SESSION['puntuacion'] . "<br>"; 
+                                echo "Partida: " . $_COOKIE['partidas'] . "<br>";
                                 mostrarPalabras($_SESSION['palabrasAcertadas']);
                             }   
                         }else{
@@ -76,6 +80,16 @@ if(!isset($_SESSION['logueado']) || !$_SESSION['logueado']){
                             insertarPuntosBd();
                             $puntuacionGlobal = puntosTotales();
                             echo "Tu puntuacion global es de: " . $puntuacionGlobal . "<br>";
+                            echo "<form  method='POST'>
+                                    <input type='submit' id='volverJugar' name='volverJugar' value='¿Volver a jugar?'>
+                                </form>";
+                            if($_SERVER["REQUEST_METHOD"] = "POST"){
+                                if(isset($_POST['volverJugar'])){
+                                    $_SESSION['primeraPalabra'] = true;
+                                    $_SESSION['partida']+=1;
+                                }
+                            }
+
                         }
                         
                     }
