@@ -20,10 +20,10 @@ if (!isset($_SESSION['logueado']) || !$_SESSION['logueado']) {
 </head>
 
 <body>
-    <p class='usuario'>Hola "<?php echo $_SESSION['nombreUser'] ?></p>
+    <p class='usuario'>Hola <?php echo $_SESSION['nombreUser'] ?></p>
     <div class="general">
         <div class="parrafo">
-            <p>Palabras encadenadas: el juego consiste en hacer una cadena de palabras.
+            <p class="juego">Palabras encadenadas: el juego consiste en hacer una cadena de palabras.
                 La maquina pondra una palabra por defecto, por ejemplo “casa”, y tienes que
                 decir otra palabra que empiece por las dos ultimas letras de la palabra dicha,
                 siguiendo con el ejemplo “sapo”, “posada”, “dama”, y así sucesivamente. No se podran repetir las palabras. Si aciertas

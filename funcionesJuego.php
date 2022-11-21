@@ -13,7 +13,7 @@ function generarPalabra(){
             $palabra = $fila['nombre_palabra'];
         }
 
-        return 'calmada';
+        return $palabra;
         
 
 

@@ -1,8 +1,11 @@
-
+<?php
+session_start();
+?>
 
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +13,19 @@
     <link rel="stylesheet" href="estilos/loginRegistro.css">
     <title>Login</title>
 </head>
+
 <body>
+    <div>
+        <?php
+
+        if (isset($_SESSION['entrada']) && $_SESSION['entrada'] == false) {
+            echo "<div class='mensaje'>";
+            echo "<p>Mal introducido usuario o contraseña</>";
+            echo "</div>";
+        }
+
+        ?>
+    </div>
     <div class="container">
         <h2>Iniciar sesion</h2><br>
         <form method="post" action="validacionLogin.php">
@@ -20,12 +35,12 @@
             <div class="form-element">
                 <input id="password" type="password" name="password" placeholder="contraseña" required />
             </div>
-             <div id="caja_checkbox">
-                    <input class = "check" type="checkbox" name="verContraseña" id="verContraseña">
-                    <label for="verContraseña" id="verContraseñaLabel">Mostrar contraseña</label>
+            <div id="caja_checkbox">
+                <input class="check" type="checkbox" name="verContraseña" id="verContraseña">
+                <label for="verContraseña" id="verContraseñaLabel">Mostrar contraseña</label>
             </div>
             <div>
-                <button type="submit"  name="register" value="register">Entrar</button>
+                <button type="submit" name="register" value="register">Entrar</button>
                 <a class="enlaceRegistro" href="registro.php" style="text-decoration: none" ;>¿No tienes cuenta?</a>
             </div>
         </form>
@@ -33,7 +48,7 @@
 </body>
 <script>
     {
-        document.getElementById("verContraseña").addEventListener("click", function () {
+        document.getElementById("verContraseña").addEventListener("click", function() {
 
             var pw = document.getElementById("password");
             if (pw.type == "password") {
