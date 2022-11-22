@@ -63,22 +63,22 @@ require("config.php");
                                                                                             } ?>" required /><br>
             </div>
             <div class="form-element">
-                <input class="contraseña" type='password' id="contraseña" name="contraseña" placeholder="Contraseña" pattern="[A-Za-z0-9]" required /><br>
+                <input class="contraseña" type='password' id="contraseña" name="contraseña" pattern="[A-Za-z0-9]{1,250}" placeholder="Contraseña"/><br>
             </div>
             <div class="form-element">
-                <input type='password' id="contraseña2" name="contraseña2" placeholder="Repita contraseña" pattern="[A-Za-z0-9]" required /><br>
+                <input type='password' id="contraseña2" name="contraseña2" placeholder="Repita contraseña" pattern="[A-Za-z0-9]{1,250}"/><br>
             </div>
             <div id="caja_checkbox">
                 <input class="check" type="checkbox" name="verContraseña" id="verContraseña">
                 <label for="verContraseña" id="verContraseñaLabel">Mostrar ambas contraseñas</label>
             </div>
             <div class="form-element">
-                <input type='text' id="nombre" name="nombre" placeholder="Nombre" pattern="[A-Za-z]" value="<?php if (!empty($_POST['nombre'])) {
+                <input type='text' id="nombre" name="nombre" placeholder="Nombre" pattern="[A-Za-z]{1,50}" value="<?php if (!empty($_POST['nombre'])) {
                                                                                                 echo $_POST['nombre'];
                                                                                             } ?>" required /><br>
             </div>
             <div class="form-element">
-                <input type='text' id="apellido" name="apellido" placeholder="Apellido" pattern="[A-Za-z]" name="apellido" placeholder="Primer apellido" value="<?php if (!empty($_POST['apellido'])) {
+                <input type='text' id="apellido" name="apellido" placeholder="Apellido" pattern="[A-Za-z]{1,50}" name="apellido" placeholder="Primer apellido" value="<?php if (!empty($_POST['apellido'])) {
                                                                                                                                                     echo $_POST['apellido'];
                                                                                                                                                 } ?>" required /><br>
             </div>
